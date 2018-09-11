@@ -1,0 +1,138 @@
+#const int MAX_Q = 10, BUSES_SIMULADOS = 10, DEMORA_ABORDANDO = 5, ESPERA = 20
+           DIST_PASAJERO_INF = 5, DIST_PASAJERO_SUP = 35, DIST_BUS_INF = 240, DIST_BUS_SUP = 36 0
+
+
+int next_event_type, largo_fila, bus_disponible, personas_que_llegan, personas_que_abordaron, total_buses
+
+float reloj, ultimo_evento, area_fila, tiempo_abordaje, tiempo_espera_total, tiempo_espera_bus
+      eventos[4], llegada_pasajeros[MAX_Q], llegada_buses[BUSES_SIMULADOS]
+
+      /*
+        eventos[0] = llegada pasajero
+        eventos[1] = abordaje
+        eventos[2] = llegada_bus
+        eventos[3] = salida_bus
+      */
+
+
+main(){
+
+  initialize()
+
+  while(total buses < BUSES_SIMULADOS){
+    timing()
+
+    update_stats()
+
+    switch(next_event_type){
+      case 0: llegada_pasajero()
+      case 1: abordaje()
+      case 2: llegada_bus()
+      case 3: salida_bus()
+    }
+  }
+
+}
+
+
+initialize(){
+
+  reloj = 0.0
+
+  bus_disponible = 0 //Creo que C++ tampoco tiene boolean
+  ultimo_evento = 0.0
+
+  personas_que_llegan = 0
+  personas_que_abordaron = 0
+  total_buses = 0
+  area_fila = 0
+  tiempo_abordaje = 0
+  tiempo_espera_total = 0
+  tiempo_espera_bus = 0
+
+  eventos[0] = uniforme(DIST_PASAJERO_INF, DIST_PASAJERO_SUP)
+  eventos[1] = 1.0e+30
+  eventos[2] = uniforme(DIST_BUS_INF, DIST_BUS_SUP)
+  eventos[3] = 1.0e+30
+}
+
+
+timing(){
+  float min = 1.0e+29
+  next_event_type = -1
+
+  for(int i=0; i < eventos.length; i++){
+    if(eventos[i] < min){
+      next_event_type = i
+      min = eventos[i]
+    }
+  }
+
+  if(next_event_type < 0) "Esto se putio xD"; exit
+
+  reloj = eventos[next_event_type]
+}
+
+update_stats(){
+
+  float ancho = reloj - ultimo_evento //Se llama asi porque es el ancho del dichoso rectangulo :V
+  ultimo_evento = reloj
+
+  area_fila += largo_fila * ancho
+
+}
+
+
+llegada_pasajero(){
+
+  eventos[0] = reloj + uniforme(DIST_PASAJERO_INF, DIST_PASAJERO_SUP)
+  personas_que_llegan++
+
+  llegada_pasajeros[largo_fila] = reloj
+  if(largo_fila == 0 && bus_disponible == 1){
+    eventos[1] = reloj + DEMORA_ABORDANDO
+  }
+  if(largo_fila < MAX_Q){
+    largo_fila++
+  }
+
+}
+
+
+abordaje(){
+
+  tiempo_abordaje += DEMORA_ABORDANDO
+  tiempo_espera_total += llegada_pasajeros[0]
+  largo_fila--
+  for(int i = 0; i < llegada_pasajeros.length-1; i++){
+    llegada_pasajeros[i] = llegada_pasajeros[i+1]
+  }
+  if(largo_fila > 0){
+    eventos[1] = reloj + DEMORA_ABORDANDO
+    eventos[4] = 1.0e+30
+  }
+  else {
+    eventos[1] = 1.0e+30
+    eventos[3] = reloj + DEMORA_ABORDANDO
+  }
+  //Estoy casi seguro que este evento sobra, pero por ahora no se me ocurre otra forma
+}
+
+llegada_bus(){
+
+  llegada_buses[total_buses] = reloj
+  eventos[2] = reloj + uniforme(DIST_BUS_INF, DIST_BUS_SUP)
+  if(largo_fila > 0){
+    eventos[1] = reloj + DEMORA_ABORDANDO
+  }else{
+    eventos[4] = reloj + ESPERA
+  }
+}
+
+
+salida_bus(){
+
+  tiempo_espera_bus += llegada_buses[total_buses]
+  eventos[salida_bus] = 1.0e+30
+  total_buses++
+}
