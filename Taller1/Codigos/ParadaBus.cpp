@@ -13,6 +13,7 @@ float reloj, tiempo_ultimo_evento, area_fila, total_tiempo_abordaje, total_tiemp
 
 bool bus_disponible;
 
+int semilla;
 
 float uniforme(int a, int b, int semilla){
     /* Return a U(a,b) random variate. */
@@ -34,9 +35,9 @@ void initialize(){
   total_tiempo_espera = 0.0;
   total_tiempo_espera_buses = 0.0;
 
-  eventos[0] = uniforme(DIST_PASAJERO_INF, DIST_PASAJERO_SUP, 1);
+  eventos[0] = uniforme(DIST_PASAJERO_INF, DIST_PASAJERO_SUP, semilla);
   eventos[1] = 1.0e+30;
-  eventos[2] = uniforme(DIST_BUS_INF, DIST_BUS_SUP, 2);
+  eventos[2] = uniforme(DIST_BUS_INF, DIST_BUS_SUP, semilla+1);
   eventos[3] = 1.0e+30;
 }
 
@@ -45,7 +46,7 @@ void timing(){
   float min = 1.0e+29;
   tipo_siguiente_evento = -1;
 
-  for(int i = 0;i < 4/*eventos.size()*/;i++){
+  for(int i = 0;i < 4;i++){
     if(eventos[i] < min){
       tipo_siguiente_evento = i;
       min = eventos[i];
@@ -72,7 +73,7 @@ void update_stats(){
 
 void llegada_pasajero(){
 
-  eventos[0] = reloj + uniforme(DIST_PASAJERO_INF, DIST_PASAJERO_SUP, 3);
+  eventos[0] = reloj + uniforme(DIST_PASAJERO_INF, DIST_PASAJERO_SUP, semilla+2);
   personas_que_llegan++;
 
   if(largo_fila < MAX_FILA){
@@ -92,7 +93,7 @@ void abordaje(){
   total_tiempo_espera += llegada_pasajeros[0];
   personas_que_abordaron++;
   largo_fila--;
-  for(int i = 0; i < 9/*llegada_pasajeros.size()-1*/; i++){
+  for(int i = 0; i < 9; i++){
     llegada_pasajeros[i] = llegada_pasajeros[i+1];
   }
   if(largo_fila > 0){
@@ -108,7 +109,7 @@ void abordaje(){
 void llegada_bus(){
 
   llegada_buses[total_buses] = reloj;
-  eventos[2] = reloj + uniforme(DIST_BUS_INF, DIST_BUS_SUP, 4);
+  eventos[2] = reloj + uniforme(DIST_BUS_INF, DIST_BUS_SUP, semilla+3);
 
   if(largo_fila > 0) eventos[1] = reloj + DEMORA_ABORDANDO;
   else eventos[4] = reloj + MIN_ESPERA_BUS;
@@ -125,40 +126,51 @@ void salida_bus(){
 
 
 void generar_estadisticas(){
-  std::cout << "Tiempo Simulado: " << reloj << endl;
-  std::cout << "Personas que abordan: " << personas_que_abordaron << endl;
-  std::cout << "Tiempo espera medio: " << total_tiempo_espera/personas_que_abordaron << endl;
-  std::cout << "Proporcion de abordaje: " << (double)personas_que_abordaron/personas_que_llegan << endl;
-  std::cout << "Tiempo medio de abordaje: " << total_tiempo_abordaje/BUSES_SIMULADOS << endl;
+  cout << "Tiempo Simulado: " << reloj << endl;
+  cout << "Personas que abordan: " << personas_que_abordaron << endl;
+  cout << "Tiempo espera medio: " << total_tiempo_espera/personas_que_abordaron << endl;
+  cout << "Proporcion de abordaje: " << (double)personas_que_abordaron/personas_que_llegan << endl;
+  cout << "Tiempo medio de abordaje: " << total_tiempo_abordaje/BUSES_SIMULADOS << endl;
+  cout << "Cantidad media de personas por bus: " << (double)personas_que_abordaron/BUSES_SIMULADOS << endl;
 }
 
 
 int main(){
 
-  initialize();
+  for(int i = 0; i < 10; i++){
 
-  while(total_buses < BUSES_SIMULADOS){
-    timing();
+    semilla = (int)(lcgrand(i)*100) + 1;
 
-    update_stats();
+    initialize();
 
-    switch(tipo_siguiente_evento){
-      case 0:
-        llegada_pasajero();
-        break;
-      case 1:
-        abordaje();
-        break;
-      case 2:
-        llegada_bus();
-        break;
-      case 3:
-        salida_bus();
-        break;
+    while(total_buses < BUSES_SIMULADOS){
+      timing();
+
+      update_stats();
+
+      switch(tipo_siguiente_evento){
+        case 0:
+          llegada_pasajero();
+          break;
+        case 1:
+          abordaje();
+          break;
+        case 2:
+          llegada_bus();
+          break;
+        case 3:
+          salida_bus();
+          break;
+      }
     }
+
+    generar_estadisticas();
   }
 
-  generar_estadisticas();
 
   return 0;
 }
+
+/* g++ -Wall principal.cpp biblioteca1.cpp -o salida //Para compilar
+  https://plot.ly/create/box-plot/#/    //Para hacer el box
+ */
