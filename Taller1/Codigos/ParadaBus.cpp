@@ -45,7 +45,7 @@ void timing(){
   float min = 1.0e+29;
   tipo_siguiente_evento = -1;
 
-  for(int i = 0;i < 4/*eventos.size()*/;i++){
+  for(int i = 0;i < eventos.lenght;i++){
     if(eventos[i] < min){
       tipo_siguiente_evento = i;
       min = eventos[i];
