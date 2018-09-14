@@ -5,7 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/sebastian/CLionProjects/ejercicio2/lcgrand.c" "/home/sebastian/CLionProjects/ejercicio2/cmake-build-debug/CMakeFiles/ejercicio2.dir/lcgrand.c.o"
+  "/home/sebastian/Documentos/Universidad/Modelos y simulación/Taller1/Codigos/ejercicio2/lcgrand.c" "/home/sebastian/Documentos/Universidad/Modelos y simulación/Taller1/Codigos/ejercicio2/cmake-build-debug/CMakeFiles/ejercicio2.dir/lcgrand.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
@@ -13,7 +13,7 @@ set(CMAKE_C_COMPILER_ID "GNU")
 set(CMAKE_C_TARGET_INCLUDE_PATH
   )
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/sebastian/CLionProjects/ejercicio2/main.cpp" "/home/sebastian/CLionProjects/ejercicio2/cmake-build-debug/CMakeFiles/ejercicio2.dir/main.cpp.o"
+  "/home/sebastian/Documentos/Universidad/Modelos y simulación/Taller1/Codigos/ejercicio2/main.cpp" "/home/sebastian/Documentos/Universidad/Modelos y simulación/Taller1/Codigos/ejercicio2/cmake-build-debug/CMakeFiles/ejercicio2.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

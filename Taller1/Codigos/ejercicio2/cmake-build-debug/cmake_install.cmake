@@ -1,4 +1,4 @@
-# Install script for directory: /home/sebastian/CLionProjects/ejercicio2
+# Install script for directory: /home/sebastian/Documentos/Universidad/Modelos y simulación/Taller1/Codigos/ejercicio2
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/sebastian/CLionProjects/ejercicio2/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/sebastian/Documentos/Universidad/Modelos y simulación/Taller1/Codigos/ejercicio2/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
