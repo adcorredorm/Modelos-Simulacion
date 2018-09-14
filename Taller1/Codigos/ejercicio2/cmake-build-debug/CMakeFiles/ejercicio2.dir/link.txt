@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/ejercicio2.dir/main.cpp.o CMakeFiles/ejercicio2.dir/lcgrand.c.o  -o ejercicio2 
