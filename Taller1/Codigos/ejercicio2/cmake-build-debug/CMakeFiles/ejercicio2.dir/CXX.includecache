@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sebastian/CLionProjects/ejercicio2/lcgrand.c
+
+/home/sebastian/CLionProjects/ejercicio2/main.cpp
+iostream
+-
+queue
+-
+lcgrand.c
+/home/sebastian/CLionProjects/ejercicio2/lcgrand.c
+
