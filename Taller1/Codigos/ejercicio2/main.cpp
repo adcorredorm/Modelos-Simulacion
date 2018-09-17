@@ -7,7 +7,7 @@ using namespace std;
 
 //El tiempo de la simulación está dado en segundo, por lo que todas las constantes se encuentran es esta medida
 
-const int DURACION_DE_LA_SIMULACION = 7*3600 , CAPACIDAD_BUS_N = 1, PROMEDIO_PERSONAS_A = 9*60, PROMEDIO_PERSONAS_B = 5*60,
+const int DURACION_DE_LA_SIMULACION = 7*3600 , CAPACIDAD_BUS_N = 10, PROMEDIO_PERSONAS_A = 9*60, PROMEDIO_PERSONAS_B = 5*60,
         MEDIA_TRAYECTORIA_BUS = 31*60, DESVIACION_ESTANDAR_TRAYECTORIA_BUS = 5*60;
 
 float reloj, total_tiempo_espera_buses, personas_en_bus,personas_transportadas,viajes_realizados;
@@ -23,9 +23,15 @@ priority_queue< pair<int,int> , vector<pair<int,int>> ,greater<pair<int,int>> > 
 
 pair <int,int > pa;
 
-float uniforme(int a, int b) {
-    return a + lcgrand(semilla) * (b-a);
+// lo encontré en la librería de simlib npi sobre como funcione
+double Normal(double mi, double sigma)
+{
+    int i;
+    double SUM = 0.0;
+    for (i=0; i<12; i++)  SUM += lcgrand(semilla);
+    return (SUM-6.0)*sigma + mi;
 }
+
 
 int poisson (int media){
     double L = exp(-media);
@@ -73,8 +79,8 @@ void initialize() {
 }
 
 void salida_bus(int tipo){
-    programar_evento((int)reloj + (int)(uniforme(MEDIA_TRAYECTORIA_BUS - DESVIACION_ESTANDAR_TRAYECTORIA_BUS,
-                                                 MEDIA_TRAYECTORIA_BUS + DESVIACION_ESTANDAR_TRAYECTORIA_BUS )),tipo);
+    programar_evento((int)reloj + (int)(Normal(MEDIA_TRAYECTORIA_BUS,
+                                                 DESVIACION_ESTANDAR_TRAYECTORIA_BUS )),tipo);
     personas_en_bus = 0;
     viajes_realizados++;
 
@@ -166,7 +172,7 @@ void reporte(){
 
 int main() {
 
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 100; i++) {
         semilla = i ;
         initialize();
         while (eventos.top().first <= DURACION_DE_LA_SIMULACION){
