@@ -1,6 +1,6 @@
 #include <iostream>
 #include <array>
-#include "lcgrand.h"
+#include "lcgrand.c"
 using namespace std;
 
 const int MAX_FILA = 10, BUSES_SIMULADOS = 10, DEMORA_ABORDANDO = 5, MIN_ESPERA_BUS = 20,
@@ -17,7 +17,7 @@ int semilla;
 
 float uniforme(int a, int b, int semilla){
     /* Return a U(a,b) random variate. */
-    return a + lcgrand(semilla) * (b - a);
+    return a + drand48() * (b - a);
 }
 
 void initialize(){
@@ -30,6 +30,7 @@ void initialize(){
   personas_que_llegan = 0;
   personas_que_abordaron = 0;
   total_buses = 0;
+  largo_fila = 0;
   area_fila = 0.0;
   total_tiempo_abordaje = 0.0;
   total_tiempo_espera = 0.0;
@@ -103,7 +104,6 @@ void abordaje(){
     eventos[1] = 1.0e+30;
     eventos[3] = reloj + DEMORA_ABORDANDO;
   }
-  //Estoy casi seguro que este evento sobra, pero por ahora no se me ocurre otra forma
 }
 
 void llegada_bus(){
@@ -132,14 +132,16 @@ void generar_estadisticas(){
   cout << "Proporcion de abordaje: " << (double)personas_que_abordaron/personas_que_llegan << endl;
   cout << "Tiempo medio de abordaje: " << total_tiempo_abordaje/BUSES_SIMULADOS << endl;
   cout << "Cantidad media de personas por bus: " << (double)personas_que_abordaron/BUSES_SIMULADOS << endl;
+  cout << "Tamaño medio de la fila: " << area_fila/reloj << endl << endl;
 }
 
 
 int main(){
 
-  for(int i = 0; i < 10; i++){
+  for(int i = 0; i < 100; i++){
 
     semilla = (int)(lcgrand(i)*100) + 1;
+    srand48(semilla);
 
     initialize();
 
@@ -170,7 +172,3 @@ int main(){
 
   return 0;
 }
-
-/* g++ -Wall principal.cpp biblioteca1.cpp -o salida //Para compilar
-  https://plot.ly/create/box-plot/#/    //Para hacer el box
- */
