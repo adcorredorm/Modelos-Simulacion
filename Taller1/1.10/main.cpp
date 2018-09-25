@@ -7,12 +7,12 @@ using namespace std;
 
 //El tiempo de la simulación está dado en segundo, por lo que todas las constantes se encuentran es esta medida
 
-const int DURACION_DE_LA_SIMULACION = 7*3600 , CAPACIDAD_BUS_N = 10, PROMEDIO_PERSONAS_A = 9*60, PROMEDIO_PERSONAS_B = 5*60,
+const int DURACION_DE_LA_SIMULACION = 7*3600 , PROMEDIO_PERSONAS_A = 9*60, PROMEDIO_PERSONAS_B = 5*60,
         MEDIA_TRAYECTORIA_BUS = 31*60, DESVIACION_ESTANDAR_TRAYECTORIA_BUS = 5*60;
 
 float reloj, total_tiempo_espera_buses, personas_en_bus,personas_transportadas,viajes_realizados;
 
-int semilla = 1;
+int semilla = 1, CAPACIDAD_BUS_N;
 
 bool bus_disponible_A,bus_disponible_B;
 
@@ -166,13 +166,19 @@ void finalizar(){
 
 void reporte(){
     cout<<"tiempo de espera total en segundos: "<<total_tiempo_espera_buses<<endl;
-    cout<<"La cantidad de viajes realizados fue: "<<viajes_realizados<<endl;
+    cout<<"La cantidad de viajes realizados fue: "<<viajes_realizados<<endl<<endl;
 }
 
 
 int main() {
-
-    for (int i = 1; i <= 100; i++) {
+    
+    float tiempos_espera_medios[100], N_probados[16], total;
+    
+    for(int j = 0; j <= 15; j++){
+        
+        CAPACIDAD_BUS_N = j + 5;
+        
+        for (int i = 1; i <= 100; i++) {
         semilla = i ;
         initialize();
         while (eventos.top().first <= DURACION_DE_LA_SIMULACION){
@@ -198,6 +204,23 @@ int main() {
         }
         finalizar();
         reporte();
+        tiempos_espera_medios[i] = total_tiempo_espera_buses/personas_transportadas;
+        }
+        total = 0.0;
+        for(int k = 0; k < 100; k++) total += tiempos_espera_medios[k];
+        N_probados[j] = total/100;
+        
+        cout << endl;
     }
+    
+    int min = 0;
+    for(int i = 0; i <= 15; i++){
+      printf("Tiempos de espera medios N=%i : %1.5f\n", i + 5, N_probados[i]);
+      if(N_probados[i] < N_probados[min]) min = i;
+    } 
+    
+    cout << "\n El N minimo es: " << min+5 << endl;
+
+    
     return 0;
 }

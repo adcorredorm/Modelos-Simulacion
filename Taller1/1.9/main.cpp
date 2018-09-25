@@ -64,7 +64,7 @@ void timing(){
 
 void update_stats(){
 
-  float ancho = reloj - tiempo_ultimo_evento; //Se llama asi porque es el ancho del dichoso rectangulo :V
+  float ancho = reloj - tiempo_ultimo_evento; 
   tiempo_ultimo_evento = reloj;
 
   area_fila += largo_fila * ancho;
@@ -80,7 +80,7 @@ void llegada_pasajero(){
   if(largo_fila < MAX_FILA){
     llegada_pasajeros[largo_fila] = reloj;
     largo_fila++;
-  }//else std::cout << "Limite de fila excedido" << endl;
+  }
 
   if(largo_fila == 0 && bus_disponible == true){
     eventos[1] = reloj + DEMORA_ABORDANDO;

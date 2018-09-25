@@ -69,7 +69,7 @@ void timing(){
 
 void update_stats(){
 
-  float ancho = reloj - tiempo_ultimo_evento; //Se llama asi porque es el ancho del dichoso rectangulo :V
+  float ancho = reloj - tiempo_ultimo_evento; 
   tiempo_ultimo_evento = reloj;
 
   area_fila += largo_fila * ancho;
@@ -178,7 +178,7 @@ void generar_estadisticas(){
   cout << "Tiempo Simulado: " << reloj << endl;
   cout << "Viajeros Atendidos: " << viajeros_atendidos << endl;
   cout << "Tiempo espera medio: " << total_tiempo_espera/viajeros_atendidos << endl;
-  cout << "Transporte pesado atendido " << transporte_pesado_atendido << endl;
+  cout << "Largo de fila medio: " << area_fila/reloj << endl;
   cout << "Beneficios Totales: " << beneficios << endl;
   cout << "Beneficio medio por viajero: " << (double)beneficios/viajeros_atendidos << endl << endl;
 }
@@ -186,7 +186,7 @@ void generar_estadisticas(){
 
 int main(){
 
-  for(int i = 0; i < 10; i++){
+  for(int i = 0; i < 100; i++){
 
     semilla = (int)(drand48()*100) + 1;
 
@@ -213,7 +213,3 @@ int main(){
 
   return 0;
 }
-
-/* g++ -Wall principal.cpp biblioteca1.cpp -o salida //Para compilar
-  https://plot.ly/create/box-plot/#/    //Para hacer el box
- */

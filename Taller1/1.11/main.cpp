@@ -5,9 +5,9 @@
 #include <time.h>
 using namespace std;
 
-const int CANT_REPARADORES = 1, DIST_COBRO = 5, DIST_REPARACION = 3, DIST_DEMORA_REP = 5*60, MAX_FILA = 1000; //Usar max fila para no ponernos a usar listas xD
+const int CANT_REPARADORES = 1, DIST_COBRO = 5, DIST_REPARACION = 3, DIST_DEMORA_REP = 4*60, MAX_FILA = 1000; //Usar max fila para no ponernos a usar listas xD
   
-const float TIEMPO_SIMULADO = 8.0*3600.0, DIST_CLIENTES = 3600.0/8.0, TIEMPO_GARANTIA = 3600;
+const float TIEMPO_SIMULADO = 8.0*3600.0, DIST_CLIENTES = 3600.0/16.0, TIEMPO_GARANTIA = 3600;
 
 int tipo_siguiente_evento, largo_fila, clientes_que_llegan, clientes_atendidos, clientes_que_no_pagan, reparadores_ocupados;
 
@@ -72,7 +72,7 @@ void timing(){
 
 void update_stats(){
 
-  float ancho = reloj - tiempo_ultimo_evento; //Se llama asi porque es el ancho del dichoso rectangulo :V
+  float ancho = reloj - tiempo_ultimo_evento;
   tiempo_ultimo_evento = reloj;
 
   area_fila += largo_fila * ancho;
@@ -185,13 +185,14 @@ void generar_estadisticas(){
   cout << "Tiempo espera medio: " << total_tiempo_espera/clientes_atendidos << endl;
   cout << "Proporcion de personas que no pagaron: " << (double)clientes_que_no_pagan/clientes_atendidos << endl;
   cout << "Beneficios Totales: " << beneficios << endl;
+  cout << "Largo promedio de la fila: " << area_fila/reloj << endl;
   cout << "Beneficio medio por cliente: " << (double)beneficios/clientes_atendidos << endl << endl;
 }
 
 
 int main(){
 
-  for(int i = 0; i < 10; i++){
+  for(int i = 0; i < 100; i++){
 
     semilla = (int)(drand48()*100) + 1;
 
@@ -218,7 +219,3 @@ int main(){
 
   return 0;
 }
-
-/* g++ -Wall principal.cpp biblioteca1.cpp -o salida //Para compilar
-  https://plot.ly/create/box-plot/#/    //Para hacer el box
- */
