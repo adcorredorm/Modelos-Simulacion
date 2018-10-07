@@ -161,6 +161,21 @@ public class SimLib {
         return sum;
     }
 
+    public static double triag(double mod, double min, double max, int stream)
+    {
+        double RN,BMA,CMA,TR;
+
+        RN = rand(stream);
+        BMA=mod-min;
+        CMA=max-min;
+        if  (RN<BMA/CMA)
+            TR= min + Math.sqrt(BMA*CMA*RN);
+        else
+            TR=max-Math.sqrt(CMA*(1.0-RN)*(max-mod));
+        return (TR);
+    }
+
+
     public static int randomInteger(float probDistrib[], int stream) {
         float u = rand(stream);
         int retrn = 1;

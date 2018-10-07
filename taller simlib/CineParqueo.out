@@ -1,0 +1,17 @@
+
+
+Modelo Del parqueadero de un cine
+
+Numero de salas                               8
+Asientos por sala                             250
+Porcentaje de patrones que cancela            20
+Duración de la simulación                     6.0 meses 
+
+************************************************************
+*  CONTINUES STATISTIC Parqueadero                         *
+************************************************************
+*  Min = 0.0                    Max = 813.0                *
+*  Time interval = 0.0 - 262800.0                          *
+*  Average = 723.7349853515625                             *
+************************************************************
+
