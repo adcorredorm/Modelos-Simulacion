@@ -142,6 +142,15 @@ public class SimLib {
         return a + u*(b-a);
     }
 
+    public static double Normal(double mi, double sigma, int istrm)
+    {
+        int i;
+        double SUM = 0.0;
+        for (i=0; i<12; i++)  SUM += rand(istrm);
+        return (SUM-6.0)*sigma + mi;
+    }
+
+
     public static float erlang(int m, float mean, int stream) {
         float mean_exponential, sum;
 
