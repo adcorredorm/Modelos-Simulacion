@@ -1,6 +1,5 @@
 package Ejercicios;
 
-import simlib.collection.*;
 import simlib.elements.*;
 import simlib.io.*;
 import static simlib.SimLib.*;
@@ -9,7 +8,7 @@ import java.io.IOException;
 
 
 public class CineParqueo {
-    static final byte INICIO_FUNCION = 1, EVENTO_LLEGADA_BUS1_HOTEL2 = 2, FIN_DE_LA_SIMULACION = 3;
+    static final byte INICIO_FUNCION = 1, FIN_DE_LA_SIMULACION = 2;
 
     static final byte STREAM_SALA_1 = 1, STREAM_SALA_2 = 2, STREAM_SALA_3 = 3, STREAM_SALA_4 = 4, STREAM_SALA_5 = 5, STREAM_SALA_6 = 6, STREAM_SALA_7 = 7,
             STREAM_SALA_8 = 8, FUNCIONES = 9, PERSONAS_POR_AUTO = 10;
