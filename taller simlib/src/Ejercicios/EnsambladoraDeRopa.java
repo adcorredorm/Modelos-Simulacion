@@ -153,8 +153,8 @@ public class EnsambladoraDeRopa {
             }
 
             if(!colaServidor4Pam.isEmpty() && !colaServidor4Cam.isEmpty() && servidor4.isIdle()){
-                float temp = unifrm(0,10,PIEZA_DANADA_1);
-                float temp2 = unifrm(0,20,PIEZA_DANADA_2);
+                float temp = unifrm(1,10,PIEZA_DANADA_1);
+                float temp2 = unifrm(1,20,PIEZA_DANADA_2);
                 servidor4.emplace(colaServidor4Cam.peek());
                 colaServidor4Cam.poll();
                 colaServidor4Pam.poll();
