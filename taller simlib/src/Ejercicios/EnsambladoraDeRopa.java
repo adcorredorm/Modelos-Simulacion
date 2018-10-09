@@ -102,7 +102,7 @@ public class EnsambladoraDeRopa {
                 colaServidor1.offer(simTime);
                 colaServidor1.poll(); //solo es para que aparezca en las estadisticas
                 servidor1.emplace(simTime);
-                eventSchedule(expon(servidor_1,STREAM_SERVIDOR_1),ENCOLAR , 2,0);
+                eventSchedule(simTime + expon(servidor_1,STREAM_SERVIDOR_1),ENCOLAR , 2,0);
             }else {
                 colaServidor1.offer(simTime);
             }
@@ -111,7 +111,7 @@ public class EnsambladoraDeRopa {
                 colaServidor2.offer(servidor1.getElement());
                 colaServidor2.poll();
                 servidor2.emplace(servidor1.getElement());
-                eventSchedule(expon(servidor_2,STREAM_SERVIDOR_2),ENCOLAR , 4,1);
+                eventSchedule(simTime + expon(servidor_2,STREAM_SERVIDOR_2),ENCOLAR , 4,1);
             }else{
                 colaServidor2.offer(servidor1.getElement());
             }
@@ -120,15 +120,17 @@ public class EnsambladoraDeRopa {
                 colaServidor3.offer(servidor1.getElement());
                 colaServidor3.poll();
                 servidor3.emplace(servidor1.getElement());
-                eventSchedule(expon(servidor_3,STREAM_SERVIDOR_3),ENCOLAR , 4,2);
+                eventSchedule(simTime + expon(servidor_3,STREAM_SERVIDOR_3),ENCOLAR , 4,2);
             }else{
                 colaServidor3.offer(servidor1.getElement());
             }
+
             servidor1.remove();
             if(!colaServidor1.isEmpty()){
+                System.out.println("holi");
                 servidor1.emplace(colaServidor1.peek());
                 colaServidor1.poll();
-                eventSchedule(expon(servidor_1,STREAM_SERVIDOR_1),ENCOLAR , 2,0);
+                eventSchedule(simTime + expon(servidor_1,STREAM_SERVIDOR_1),ENCOLAR , 2,0);
             }
         }else if (eventAttributes[0]==4){
             if(eventAttributes[1]==1){
@@ -137,39 +139,39 @@ public class EnsambladoraDeRopa {
                 if(!colaServidor2.isEmpty()){
                     servidor2.emplace(colaServidor2.peek());
                     colaServidor2.poll();
-                    eventSchedule(expon(servidor_2,STREAM_SERVIDOR_2),ENCOLAR , 4,1);
+                    eventSchedule(simTime + expon(servidor_2,STREAM_SERVIDOR_2),ENCOLAR , 4,1);
                 }
             }
             if(eventAttributes[1]==2){
                 colaServidor4Pam.offer(servidor3.getElement());
                 servidor3.remove();
                 if(!colaServidor3.isEmpty()){
-                    servidor2.emplace(colaServidor3.peek());
+                    servidor3.emplace(colaServidor3.peek());
                     colaServidor3.poll();
-                    eventSchedule(expon(servidor_3,STREAM_SERVIDOR_3),ENCOLAR , 4,2);
+                    eventSchedule(simTime + expon(servidor_3,STREAM_SERVIDOR_3),ENCOLAR , 4,2);
                 }
             }
 
             if(!colaServidor4Pam.isEmpty() && !colaServidor4Cam.isEmpty() && servidor4.isIdle()){
-                float temp = unifrm(1,10,PIEZA_DANADA_1);
-                float temp2 = unifrm(1,20,PIEZA_DANADA_1);
+                float temp = unifrm(0,10,PIEZA_DANADA_1);
+                float temp2 = unifrm(0,20,PIEZA_DANADA_2);
                 servidor4.emplace(colaServidor4Cam.peek());
                 colaServidor4Cam.poll();
                 colaServidor4Pam.poll();
 
                 if( temp <= 1 || temp2 <= 1 ){
-                    eventSchedule(expon(servidor_4_conDano,STREAM_SERVIDOR_4),ENCOLAR , 5,0);
+                    eventSchedule(simTime + expon(servidor_4_conDano,STREAM_SERVIDOR_4),ENCOLAR , 5,0);
                 }else {
-                    eventSchedule(expon(servidor_4_sinDano,STREAM_SERVIDOR_4),LISTO ,4);
+                    eventSchedule(simTime + expon(servidor_4_sinDano,STREAM_SERVIDOR_4),LISTO ,4);
                 }
             }
         }else if (eventAttributes[0]==5){
 
-            if (!servidor5.isIdle()){
+            if (servidor5.isIdle()){
                 colaServidor5.offer(servidor4.getElement());
                 colaServidor5.poll();
                 servidor5.emplace(servidor4.getElement());
-                eventSchedule(expon(servidor_5,STREAM_SERVIDOR_5),LISTO ,5);
+                eventSchedule(simTime + expon(servidor_5,STREAM_SERVIDOR_5),LISTO ,5);
             }else {
                 colaServidor5.offer(servidor4.getElement());
             }
@@ -190,7 +192,7 @@ public class EnsambladoraDeRopa {
             if (!colaServidor5.isEmpty()){
                 servidor5.emplace(colaServidor5.peek());
                 colaServidor5.poll();
-                eventSchedule(expon(servidor_5,STREAM_SERVIDOR_5),LISTO ,5);
+                eventSchedule(simTime + expon(servidor_5,STREAM_SERVIDOR_5),LISTO ,5);
             }
         }
         prendasCompletadas++;

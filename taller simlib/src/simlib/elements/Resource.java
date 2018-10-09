@@ -67,12 +67,14 @@ public class Resource<E> extends Element{
 
     public double getAverage(){
         update();
-        return (this.area)/(simTime - start);
+        return (this.area)/(simTime - this.start);
     }
 
      void update(){
+        System.out.println("Area: "+area+" "+(simTime - this.lastUpdate));
         if(element != null)
-            area += (simTime - lastUpdate);
-        lastUpdate = simTime;
+            this.area += (simTime - this.lastUpdate);
+        this.lastUpdate = simTime;
+
     }
 }

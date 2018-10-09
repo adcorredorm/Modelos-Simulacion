@@ -3,6 +3,7 @@ package simlib;
 import simlib.elements.Event;
 import simlib.elements.Element;
 import simlib.collection.Collection;
+import simlib.exception.*;
 import simlib.io.SimWriter;
 
 import java.io.IOException;
@@ -41,6 +42,11 @@ public class SimLib {
      * @param attributes attributes of the event
      */
     public static void eventSchedule(double time, byte type, float... attributes) {
+        if( time < 0 ){
+            throw new EventTimeException();
+        } else if( time < simTime ){
+            throw new PasstEventException();
+        }
         events.offer(new Event(type, time, attributes));
     }
 

@@ -5,113 +5,113 @@ Modelo De la ensambladora de ropa
 ************************************************************
 *  QUEUE Cola del servidor 1                               *
 ************************************************************
-*  Time interval = 0.0 - 720.0                             *
-*  Incoming = 61                                           *
-*  Outcoming = 61                                          *
+*  Time interval = 0.0 - 72000.0                           *
+*  Incoming = 7151                                         *
+*  Outcoming = 7151                                        *
 *  Current length = 0                                      *
-*  Maximal length = 1                                      *
-*  Average length = 0.0                                    *
+*  Maximal length = 10                                     *
+*  Average length = 0.7892881463236279                     *
 ************************************************************
 
 ************************************************************
 *  QUEUE Cola del servidor 2                               *
 ************************************************************
-*  Time interval = 0.0 - 720.0                             *
-*  Incoming = 61                                           *
-*  Outcoming = 61                                          *
+*  Time interval = 0.0 - 72000.0                           *
+*  Incoming = 7150                                         *
+*  Outcoming = 7150                                        *
 *  Current length = 0                                      *
-*  Maximal length = 1                                      *
-*  Average length = 0.0                                    *
+*  Maximal length = 7                                      *
+*  Average length = 0.2523133984406789                     *
 ************************************************************
 
 ************************************************************
 *  QUEUE Cola del servidor 3                               *
 ************************************************************
-*  Time interval = 0.0 - 720.0                             *
-*  Incoming = 61                                           *
-*  Outcoming = 61                                          *
+*  Time interval = 0.0 - 72000.0                           *
+*  Incoming = 7150                                         *
+*  Outcoming = 7150                                        *
 *  Current length = 0                                      *
-*  Maximal length = 1                                      *
-*  Average length = 0.0                                    *
+*  Maximal length = 12                                     *
+*  Average length = 0.51540949122111                       *
 ************************************************************
 
 ************************************************************
 *  QUEUE Cola del servidor 4 de camisas                    *
 ************************************************************
-*  Time interval = 0.0 - 720.0                             *
-*  Incoming = 61                                           *
-*  Outcoming = 61                                          *
+*  Time interval = 0.0 - 72000.0                           *
+*  Incoming = 7149                                         *
+*  Outcoming = 7149                                        *
 *  Current length = 0                                      *
-*  Maximal length = 1                                      *
-*  Average length = 0.181112900417712                      *
+*  Maximal length = 21                                     *
+*  Average length = 2.702553886625502                      *
 ************************************************************
 
 ************************************************************
 *  QUEUE Cola del servidor 4 de pantalones                 *
 ************************************************************
-*  Time interval = 0.0 - 720.0                             *
-*  Incoming = 61                                           *
-*  Outcoming = 61                                          *
-*  Current length = 0                                      *
-*  Maximal length = 1                                      *
-*  Average length = 0.15439064361982877                    *
+*  Time interval = 0.0 - 72000.0                           *
+*  Incoming = 7150                                         *
+*  Outcoming = 7149                                        *
+*  Current length = 1                                      *
+*  Maximal length = 20                                     *
+*  Average length = 2.352288626352946                      *
 ************************************************************
 
 ************************************************************
 *  QUEUE Cola del servidor 5                               *
 ************************************************************
-*  Time interval = 0.0 - 720.0                             *
-*  Incoming = 0                                            *
-*  Outcoming = 0                                           *
+*  Time interval = 0.0 - 72000.0                           *
+*  Incoming = 1049                                         *
+*  Outcoming = 1049                                        *
 *  Current length = 0                                      *
-*  Maximal length = 0                                      *
-*  Average length = 0.0                                    *
+*  Maximal length = 4                                      *
+*  Average length = 0.03713186306423611                    *
 ************************************************************
 
 ************************************************************
 *  RESOURCE Servidor 1                                     *
 ************************************************************
-*  Status = IDLE                                           *
-*  Average = -30.196199417114258                           *
-*  Time interval = 0.0 - 720.0                             *
-*  Request = 61                                            *
+*  Status = BUSSY                                          *
+*  Average = 0.5904669925371806                            *
+*  Time interval = 0.0 - 72000.0                           *
+*  Request = 7151                                          *
 ************************************************************
 
 ************************************************************
 *  RESOURCE Servidor 2                                     *
 ************************************************************
-*  Status = IDLE                                           *
-*  Average = -0.17198140919208527                          *
-*  Time interval = 0.0 - 720.0                             *
-*  Request = 61                                            *
+*  Status = BUSSY                                          *
+*  Average = 0.4072433463467492                            *
+*  Time interval = 0.0 - 72000.0                           *
+*  Request = 7150                                          *
 ************************************************************
 
 ************************************************************
 *  RESOURCE Servidor 3                                     *
 ************************************************************
 *  Status = IDLE                                           *
-*  Average = -0.14525914192199707                          *
-*  Time interval = 0.0 - 720.0                             *
-*  Request = 61                                            *
+*  Average = 0.49441251383887397                           *
+*  Time interval = 0.0 - 72000.0                           *
+*  Request = 7150                                          *
 ************************************************************
 
 ************************************************************
 *  RESOURCE Servidor 4                                     *
 ************************************************************
-*  Status = IDLE                                           *
-*  Average = 0.2317647933959961                            *
-*  Time interval = 0.0 - 720.0                             *
-*  Request = 61                                            *
+*  Status = BUSSY                                          *
+*  Average = 0.7528300116856893                            *
+*  Time interval = 0.0 - 72000.0                           *
+*  Request = 7149                                          *
 ************************************************************
 
 ************************************************************
 *  RESOURCE Servidor 5                                     *
 ************************************************************
 *  Status = IDLE                                           *
-*  Average = 0.0                                           *
-*  Time interval = 0.0 - 720.0                             *
-*  Request = 0                                             *
+*  Average = 0.17550073560078938                           *
+*  Time interval = 0.0 - 72000.0                           *
+*  Request = 1049                                          *
 ************************************************************
 
-El numero de prendas completadas es 61
-el promedio de tiempo por prenda es -353.5709
+El numero de prendas completadas es 7148
+ el promedio de tiempo por prenda es 57.477345

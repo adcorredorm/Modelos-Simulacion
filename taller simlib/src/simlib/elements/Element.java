@@ -8,14 +8,14 @@ import static simlib.SimLib.*;
 
 public abstract class Element {
     Float start;
-    float lastUpdate;
-    float area;
+    double lastUpdate;
+    double area;
     String name;
 
     public Element( String name ){
         this.name = name;
-        start = simTime;
-        area = 0;
+        this.start = simTime;
+        this.area = 0;
     }
 
      String completeHalfLine(String line){
