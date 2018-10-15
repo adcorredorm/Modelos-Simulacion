@@ -53,9 +53,14 @@ public class Queue<E> extends Collection {
     }
 
     public boolean remove( E element ){
-        for( Node node = head; node!= null; node = node.next ){
-            if ( node.data.equals(element) ){
-                node = node.next;
+        if(head.data.equals(element)){
+            poll();
+            return true;
+        }
+        for( Node node = head; node != tail; node = node.next ){
+            if ( node.next.data.equals(element) ){
+                node.next = node.next.next;
+                if(node.next == null) tail = node;
                 update();
                 size --;
                 return true;
