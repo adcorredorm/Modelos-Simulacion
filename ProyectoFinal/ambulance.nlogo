@@ -2,6 +2,13 @@ breed[hospitals hospital]
 breed[ambulances ambulance]
 breed[people person]
 
+directed-link-breed[services service]
+
+globals[
+  speed
+  killed
+]
+
 hospitals-own[
   hurted
 ]
@@ -13,26 +20,35 @@ ambulances-own[
 
 people-own[
   lifeTime
+  taken
+]
+
+services-own[
+  return
 ]
 
 to setup
   ca
   reset-ticks
 
-  create-hospitals NumHosp[
+  ;;Set Globals
+  set speed 3
+  set killed 0
+
+  create-hospitals hospitales[
     setxy random-xcor random-ycor
     set size 2
     set shape "house"
+    set hurted 0
   ]
 
   let i 0
-  while [i < NumHosp][
-    create-ambulances NumAmb[
-      create-link-with hospital i
+  while [i < hospitales][
+    create-ambulances ambulancias[
       set owner (hospital i)
       move-to owner
 
-      set busy false
+      set busy -1
 
       set size 1
       set color [color] of owner
@@ -41,18 +57,98 @@ to setup
     set i i + 1
   ]
 
-  ask links[ hide-link ]
-
-
 end
 
 to go
+  if (ticks mod 15) = 0 [createHurted]
 
-  ask ambulances[
-    fd 1
-  ]
+  move
+  lifeDown
 
   tick
+end
+
+to createHurted
+
+  create-people random 5 [
+    set lifeTime random-exponential tiempoVida
+    setxy random-xcor random-ycor
+    set shape "person"
+    set taken false
+
+
+    if any? ambulances with [busy = -1][
+      let nearestAmbulance min-one-of (ambulances with [busy = -1])[distance myself]
+      create-service-to nearestAmbulance [set return false]
+      ask nearestAmbulance [set busy myself]
+      ask services[hide-link]
+    ]
+  ]
+
+end
+
+to move
+
+  ask services with [return][
+
+    let target [owner] of end2
+
+    ask both-ends[
+      ifelse distance target < speed [
+        move-to target
+
+        ask target[set hurted hurted + 1]
+
+        ifelse breed = ambulances
+        [set busy -1]
+        [die]
+      ][
+        face target
+        fd speed
+      ]
+    ]
+  ]
+
+  ask services with [not return][
+
+    let flag false
+
+    ask end2[
+      ifelse distance other-end < speed [
+        move-to other-end
+        ask other-end [set taken true]
+        set flag true
+      ][
+        face other-end
+        fd speed
+      ]
+    ]
+
+    if flag [set return true]
+  ]
+
+  ask ambulances with [busy = owner][
+    ifelse distance owner < speed [
+      move-to owner
+      set busy -1
+    ][
+      face owner
+      fd speed
+    ]
+  ]
+
+end
+
+to lifeDown
+  ask people with [not taken][ set lifeTime lifeTime - 1 ]
+
+  ask people with [lifeTime < 0][
+    ask my-out-links[
+      ask end2[set busy owner]
+    ]
+    set killed killed + 1
+    die
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -87,11 +183,11 @@ SLIDER
 72
 239
 105
-NumHosp
-NumHosp
+hospitales
+hospitales
 1
 20
-10.0
+7.0
 1
 1
 NIL
@@ -102,11 +198,11 @@ SLIDER
 121
 240
 154
-NumAmb
-NumAmb
+ambulancias
+ambulancias
 1
 20
-5.0
+2.0
 1
 1
 NIL
@@ -145,6 +241,79 @@ G
 NIL
 NIL
 1
+
+MONITOR
+816
+49
+885
+94
+muertos
+killed
+0
+1
+11
+
+MONITOR
+849
+174
+938
+219
+curados
+sum [hurted] of hospitals
+0
+1
+11
+
+SLIDER
+66
+213
+238
+246
+tiempoVida
+tiempoVida
+1
+30
+5.0
+1
+1
+NIL
+HORIZONTAL
+
+PLOT
+832
+305
+1032
+455
+% pacientes salvados
+NIL
+NIL
+0.0
+10.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "plot 1" "let curados sum [hurted] of hospitals\nplot (curados + 1) / (curados + killed + 1)"
+
+PLOT
+1075
+304
+1275
+454
+% ocupacion ambulancias
+NIL
+NIL
+0.0
+10.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count ambulances with [busy != -1] / (hospitales * ambulancias)"
 
 @#$#@#$#@
 ## WHAT IS IT?
